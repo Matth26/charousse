@@ -1,15 +1,26 @@
+.charousse_header
+  color: white
+  margin-left: 30px
+  font-size: 60px
+  font-weight: bolder
+  text-shadow: 1px 1px 10px $base-body-color
+
 .sheet
-  padding: 40px 20px
-  background-color: white
+  padding: 10px 20px
+  border-radius: 20px
+  margin-left: 30px
+  margin-right: 30px
+  max-width: 600px
+  background-color: $light-bg-color
 
 .sheet__inner
   max-width: 600px
 
 .sheet__title
   font-size: 30px
-  margin-bottom: 30px
   font-weight: bold
-  color: $dark-body-color
+  padding: 10px 0px 10px 0px 
+  color: $base-body-color
   line-height: 1
 
 .sheet__lead
@@ -22,28 +33,34 @@
 
 .sheet__body
   color: $light-body-color
+  background-color: $light-bg-color
   font-size: 14px
   margin-bottom: 30px
+  text-align: justify
+  text-justify: inter-word
 
-  h1, h2, h3, h4, h5, h6, p, blockquote, pre, ul, ol
-    margin-bottom: 20px
+  h1, h2, h3, h4, h5, h6, blockquote, pre, ul, ol
+    margin-bottom: 10px
 
     &:last-child
       margin-bottom: 0
 
+  p
+    padding-top: 5px
+
   h1, h2, h3, h4, h5, h6
     font-weight: bold
-    margin-top: 40px
+    margin-top: 20px
     color: $dark-body-color
 
   h1
     font-size: 3em
 
   h2
-    font-size: 2em
+    font-size: 1.2em
 
   h3
-    font-size: 1.5em
+    font-size: 0.8em
 
   li
     margin-left: 20px
@@ -62,10 +79,10 @@
 
 @media screen and (min-width: 900px)
   .sheet
-    padding: 40px 60px
+    padding: 10px 30px
 
   .sheet__title
-    font-size: 48px
+    font-size: 38px
 
   .sheet__lead
     font-size: 20px
