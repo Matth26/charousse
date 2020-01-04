@@ -35,7 +35,7 @@ class Layout extends React.Component {
             />
             <ul className="sidebar__menu">
               <li>
-                <Link to="/">Accueil</Link>
+                <Link to="/accueil">Accueil</Link>
               </li>
               <li>
                 <Link to="/presentation">Présentation</Link>
@@ -50,13 +50,10 @@ class Layout extends React.Component {
                 <Link to="/presentation">Vallée de Sye et Gervanne</Link>
               </li>
               <li>
-                <Link to="/presentation">Plan d'accès</Link>
+                <Link to="/plan">Plan d'accès</Link>
               </li>
               <li>
                 <Link to="/liens">Liens</Link>
-              </li>
-              <li>
-                <Link to="/about">About</Link>
               </li>
             </ul>
             <p className="sidebar__social">
