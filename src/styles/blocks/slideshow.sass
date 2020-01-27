@@ -5,6 +5,18 @@
 .slideshow__img
   min-width: 500px
 
+.fade
+  -webkit-animation-name: fade 1.5s 1
+  animation: fade 1.5s 1
+
+@-webkit-keyframes fade
+  from {opacity: .4}
+  to {opacity: 1}
+
+@keyframes fade
+  from {opacity: .4}
+  to {opacity: 1}
+
 .img_count
   color: #f2f2f2
   position: absolute

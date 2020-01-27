@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
 import Img from 'gatsby-image';
 
-function renderDots(index, images, setIndex) {
-  return <div></div>;
-}
-
 const SlideShow = ({ images }) => {
   const [index, setIndex] = useState(0);
+
+  // textInput doit être déclaré ici pour que la ref puisse s’y référer
+  let fadeContainer = React.createRef();
 
   //Minus 1 for array offset from 0
   const length = images.length - 1;
   const handleNext = () => (index === length ? setIndex(0) : setIndex(index + 1));
   const handlePrevious = () => (index === 0 ? setIndex(length) : setIndex(index - 1));
   const image = images[index];
-  console.log(index);
-  console.log(image);
+
+  /*const handleAnimation = () =>
+  {
+    fadeContainer.current.classList.remove('fade');
+    fadeContainer.current.classList.add('fade');
+  }*/
+
   return (
     <div className="slideshow__container">
-      <div className="slideshow__img">
+      <div className="slideshow__img fade" ref={fadeContainer}>
         <Img fluid={image.fluid} key={index} />
       </div>
       <div className="img_count">
