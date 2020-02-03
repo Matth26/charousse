@@ -21,7 +21,9 @@ class Layout extends React.Component {
         <HelmetDatoCms
           favicon={this.props.data.datoCmsSite.faviconMetaTags}
           seo={this.props.data.datoCmsHome.seoMetaTags}
-        />
+        >
+          <title>Charousse</title>
+        </HelmetDatoCms>
         <div className="container__sidebar">
           <div className="sidebar">
             <h6 className="sidebar__title">
