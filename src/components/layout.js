@@ -29,12 +29,6 @@ class Layout extends React.Component {
             <h6 className="sidebar__title">
               <Link to="/">{this.props.data.datoCmsSite.globalSeo.siteName}</Link>
             </h6>
-            <div
-              className="sidebar__intro"
-              dangerouslySetInnerHTML={{
-                __html: this.props.data.datoCmsHome.introTextNode.childMarkdownRemark.html
-              }}
-            />
             <ul className="sidebar__menu">
               <li>
                 <Link to="/">Accueil</Link>
@@ -77,9 +71,6 @@ class Layout extends React.Component {
             <div className="mobile-header">
               <div className="mobile-header__menu" onClick={this.toggleSidebar}>
                 <div></div>
-              </div>
-              <div className="mobile-header__logo">
-                <Link to="/">{this.props.data.datoCmsSite.globalSeo.siteName}</Link>
               </div>
             </div>
           </div>
