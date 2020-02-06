@@ -35,8 +35,8 @@ const SlideShow = ({ images }) => {
       </button>
       <div className="dot__container">
         {images.map((image, i) => {
-          if (i === index) return <span className="dot dot_active"></span>;
-          else return <span className="dot" onClick={() => setIndex(i)}></span>;
+          if (i === index) return <span key={i} className="dot dot_active"></span>;
+          else return <span key={i} className="dot" onClick={() => setIndex(i)}></span>;
         })}
       </div>
     </div>

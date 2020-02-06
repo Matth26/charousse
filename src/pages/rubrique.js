@@ -5,26 +5,17 @@ import Layout from '../components/layout';
 
 import BackgroundImage from 'gatsby-background-image';
 
-import SlideShow from '../components/SlideShow';
-
 function displayContent(block, i) {
   if (block.image !== undefined) {
     return (
       <div key={i} className="sheet__gallery">
-        <Img fluid={block.image.fluid} />
-      </div>
-    );
-  } else if (block.images) { // SlideShow
-    console.log(block)
-    return (
-      <div className="sheet__gallery">
-        <SlideShow images={block.images} />
+        <Img key={i} fluid={block.image.fluid} />
       </div>
     );
   } else {
     return (
       <div
-        key={i}
+        key={i} 
         className="sheet__body"
         dangerouslySetInnerHTML={{
           __html: block.paragrapheNode.childMarkdownRemark.html
@@ -34,9 +25,8 @@ function displayContent(block, i) {
   }
 }
 
-const AccueilPage = ({ data: { page, allDatoCmsBackground } }) => {
+const RubriquePage = ({ data: { page, allDatoCmsBackground } }) => {
   const contentArray = page.edges[0].node.pageContent;
-  console.log(page);
   return (
     <BackgroundImage
       Tag="section"
@@ -46,7 +36,7 @@ const AccueilPage = ({ data: { page, allDatoCmsBackground } }) => {
     >
       <Layout>
         <article className="sheet">
-          <h1 className="sheet__title">Accueil</h1>
+          <h1 className="sheet__title">Rubrique Saisonnière</h1>
           <div className="sheet__inner">{contentArray.map((block, i) => displayContent(block, i))}</div>
         </article>
       </Layout>
@@ -54,11 +44,11 @@ const AccueilPage = ({ data: { page, allDatoCmsBackground } }) => {
   );
 };
 
-export default AccueilPage;
+export default RubriquePage;
 
 export const query = graphql`
-  query accueilQuery {
-    page: allDatoCmsPage(filter: { pageName: { eq: "Accueil" } }) {
+  query rubriqueQuery {
+    page: allDatoCmsPage(filter: { pageName: { eq: "Rubrique Saisonnière" } }) {
       edges {
         node {
           id
@@ -74,14 +64,6 @@ export const query = graphql`
             ... on DatoCmsImage {
               id
               image {
-                fluid(maxWidth: 530, imgixParams: { fm: "jpg", auto: "compress" }) {
-                  ...GatsbyDatoCmsSizes
-                }
-              }
-            }
-            ... on DatoCmsSlideshow {
-              id
-              images {
                 fluid(maxWidth: 530, imgixParams: { fm: "jpg", auto: "compress" }) {
                   ...GatsbyDatoCmsSizes
                 }

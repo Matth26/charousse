@@ -5,16 +5,17 @@ import Layout from '../components/layout';
 
 import BackgroundImage from 'gatsby-background-image';
 
-function displayContent(block) {
+function displayContent(block, i) {
   if (block.image !== undefined) {
     return (
-      <div className="sheet__gallery">
-        <Img fluid={block.image.fluid} />
+      <div key={i} className="sheet__gallery">
+        <Img key={i} fluid={block.image.fluid} />
       </div>
     );
   } else {
     return (
       <div
+        key={i} 
         className="sheet__body"
         dangerouslySetInnerHTML={{
           __html: block.paragrapheNode.childMarkdownRemark.html
@@ -36,7 +37,7 @@ const PresentationPage = ({ data: { page, allDatoCmsBackground } }) => {
       <Layout>
         <article className="sheet">
           <h1 className="sheet__title">Présentation</h1>
-          <div className="sheet__inner">{contentArray.map(block => displayContent(block))}</div>
+          <div className="sheet__inner">{contentArray.map((block, i) => displayContent(block, i))}</div>
         </article>
       </Layout>
     </BackgroundImage>

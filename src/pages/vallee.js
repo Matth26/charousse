@@ -11,14 +11,14 @@ function displayContent(block, i) {
   if (block.image !== undefined) {
     return (
       <div key={i} className="sheet__gallery">
-        <Img fluid={block.image.fluid} />
+        <Img key={i} fluid={block.image.fluid} />
       </div>
     );
   } else if (block.images) { // SlideShow
     console.log(block)
     return (
-      <div className="sheet__gallery">
-        <SlideShow images={block.images} />
+      <div key={i} className="sheet__gallery">
+        <SlideShow key={i} images={block.images} />
       </div>
     );
   } else {
@@ -34,9 +34,9 @@ function displayContent(block, i) {
   }
 }
 
-const AccueilPage = ({ data: { page, allDatoCmsBackground } }) => {
+const ValleePage = ({ data: { page, allDatoCmsBackground } }) => {
   const contentArray = page.edges[0].node.pageContent;
-  console.log(page);
+  console.log(page)
   return (
     <BackgroundImage
       Tag="section"
@@ -46,7 +46,7 @@ const AccueilPage = ({ data: { page, allDatoCmsBackground } }) => {
     >
       <Layout>
         <article className="sheet">
-          <h1 className="sheet__title">Accueil</h1>
+          <h1 className="sheet__title">Vallée de Sye et Gervanne</h1>
           <div className="sheet__inner">{contentArray.map((block, i) => displayContent(block, i))}</div>
         </article>
       </Layout>
@@ -54,11 +54,11 @@ const AccueilPage = ({ data: { page, allDatoCmsBackground } }) => {
   );
 };
 
-export default AccueilPage;
+export default ValleePage;
 
 export const query = graphql`
-  query accueilQuery {
-    page: allDatoCmsPage(filter: { pageName: { eq: "Accueil" } }) {
+  query valleeQuery {
+    page: allDatoCmsPage(filter: { pageName: { eq: "Vallée de Sye et Gervanne" } }) {
       edges {
         node {
           id
