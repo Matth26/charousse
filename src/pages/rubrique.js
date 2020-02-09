@@ -16,7 +16,7 @@ function displayContent(block, i) {
     return (
       <div
         key={i} 
-        className="sheet__body"
+        className="sheet__body letter"
         dangerouslySetInnerHTML={{
           __html: block.paragrapheNode.childMarkdownRemark.html
         }}
@@ -27,6 +27,7 @@ function displayContent(block, i) {
 
 const RubriquePage = ({ data: { page, allDatoCmsBackground } }) => {
   const contentArray = page.edges[0].node.pageContent;
+  console.log(contentArray)
   return (
     <BackgroundImage
       Tag="section"
@@ -37,7 +38,7 @@ const RubriquePage = ({ data: { page, allDatoCmsBackground } }) => {
       <Layout>
         <article className="sheet">
           <h1 className="sheet__title">Rubrique Saisonnière</h1>
-          <div className="sheet__inner">{contentArray.map((block, i) => displayContent(block, i))}</div>
+            <div className="sheet__inner">{contentArray.map((block, i) => displayContent(block, i))}</div>
         </article>
       </Layout>
     </BackgroundImage>
