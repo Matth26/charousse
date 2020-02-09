@@ -5,42 +5,6 @@ import Layout from '../components/layout';
 
 import BackgroundImage from 'gatsby-background-image';
 
-function displayDate(date) {
-  return (
-    date
-      .replace('January', 'Janvier')
-      .replace('February', 'Février')
-      .replace('March', 'Mars')
-      .replace('April', 'Avril')
-      .replace('May', 'Mai')
-      .replace('June', 'Juin')
-      .replace('July', 'Juillet')
-      .replace('August', 'Août')
-      .replace('September', 'Septembre')
-      .replace('October', 'Octobre')
-      .replace('November', 'Novembre')
-      .replace('December', 'Décembre')
-      //================================
-      .replace('Monday', 'Lundi')
-      .replace('Tuesday', 'Mardi')
-      .replace('Wednesday', 'Mercredi')
-      .replace('Thursday', 'Jeudi')
-      .replace('Friday', 'Vendredi')
-      .replace('Saturday', 'Samedi')
-      .replace('Sunday', 'Dimanche')
-      //================================
-      .replace('2019', '')
-      .replace('2020', '')
-      .replace('2021', '')
-      .replace('2022', '')
-      .replace('2023', '')
-      .replace('2024', '')
-      .replace('2025', '')
-      .replace('2026', '')
-      .replace('2027', '')
-  );
-}
-
 var months = [
   'January',
   'February',
@@ -58,13 +22,60 @@ var months = [
 
 var years = ['2019', '2020', '2021', '2022'];
 
+function replaceDate(date) {
+  return date
+  .replace('January', 'Janvier')
+  .replace('February', 'Février')
+  .replace('March', 'Mars')
+  .replace('April', 'Avril')
+  .replace('May', 'Mai')
+  .replace('June', 'Juin')
+  .replace('July', 'Juillet')
+  .replace('August', 'Août')
+  .replace('September', 'Septembre')
+  .replace('October', 'Octobre')
+  .replace('November', 'Novembre')
+  .replace('December', 'Décembre')
+  //================================
+  .replace('Monday', 'Lundi')
+  .replace('Tuesday', 'Mardi')
+  .replace('Wednesday', 'Mercredi')
+  .replace('Thursday', 'Jeudi')
+  .replace('Friday', 'Vendredi')
+  .replace('Saturday', 'Samedi')
+  .replace('Sunday', 'Dimanche')
+  //================================
+  .replace('2019', '')
+  .replace('2020', '')
+  .replace('2021', '')
+  .replace('2022', '')
+  .replace('2023', '')
+  .replace('2024', '')
+  .replace('2025', '')
+  .replace('2026', '')
+  .replace('2027', '');
+}
+
+function displayDate(date) {
+  return replaceDate(date);
+}
+
+function displayStageDate(debut, fin) {
+  var d = replaceDate(debut).split(' ');
+  var f = replaceDate(fin).split(' ');
+  return (
+    <span className="stage_date">
+      Du {<span className="stage_week_day">{d[0]}</span>} {d[1]} {d[2]} au {<span className="stage_week_day">{f[0]}</span>} {f[1]} {f[2]}
+    </span>);
+}
+
 function displayStage(stage) {
   return (
     <div key={stage.id}>
       <figure className="card">
         <figcaption className="card__caption">
           <h6 className="card__title">
-            Du {displayDate(stage.debut)} au {displayDate(stage.fin)}
+            {displayStageDate(stage.debut, stage.fin)}
           </h6>
           <div className="card__description">
             <p>{stage.intitule}</p>
@@ -77,7 +88,6 @@ function displayStage(stage) {
 
 function displayMonth(stages, month) {
   const stagesMonth = stages.filter(({ node: stage }) => stage.debut.includes(month));
-
   return (
     <div className="month__body">
       {stagesMonth.length > 0 && (
