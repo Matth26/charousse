@@ -17,6 +17,7 @@
     "gatsby-transformer-sharp": "^2.3.6",
     "node-sass": "^4.11.0",
     "react": "^16.10.2",
+    "react-collapsible": "^2.6.2",
     "react-dom": "^16.10.2",
     "react-flickity-component": "^3.4.0",
     "react-helmet": "^5.2.0",

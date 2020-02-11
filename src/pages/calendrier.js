@@ -2,6 +2,7 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import Layout from '../components/layout';
+import Collapsible from 'react-collapsible';
 
 import BackgroundImage from 'gatsby-background-image';
 
@@ -78,8 +79,11 @@ function displayStage(stage) {
             {displayStageDate(stage.debut, stage.fin)}
           </h6>
           <div className="card__description">
-            <p>{stage.intitule}</p>
+            <Collapsible trigger={stage.intitule}>
+              <p>Stage balalb abldql qs fqjsfk qc wjsckqs cqs ckqjsc qs.</p>
+            </Collapsible>  
           </div>
+
         </figcaption>
       </figure>
     </div>
