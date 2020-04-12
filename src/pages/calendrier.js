@@ -134,9 +134,11 @@ function displayStage(stage) {
             <p className="stage__description">{stage.description}</p>
             <div className="stage__contact">
               <p>Proposé par <b>{infos.nom}</b></p>
-              {(infos.tel != "") > 0 && (<p><MdPhone/> {infos.tel}</p>)}
-              {(infos.email != "") > 0 && (<p><MdEmail/> {infos.email}</p>)}
-              {(infos.site != "") > 0 && (<p><MdWeb/> {infos.site}</p>)}
+              <div className="stage__contact_infos">
+                {(infos.tel != "") > 0 && (<p><MdPhone/> {infos.tel}</p>)}
+                {(infos.email != "") > 0 && (<p><MdEmail/> {infos.email}</p>)}
+                {(infos.site != "") > 0 && (<p><MdWeb/> {infos.site}</p>)}
+              </div>
             </div>
           </div>
         </figcaption>
