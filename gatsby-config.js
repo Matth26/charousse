@@ -2,19 +2,21 @@ require('dotenv').config();
 
 module.exports = {
   siteMetadata: {
-    title: `Charousse`
+    title: `Charousse`,
   },
   plugins: [
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     `gatsby-plugin-react-helmet`,
     `gatsby-plugin-sass`,
+    `gatsby-plugin-image`,
+    `gatsby-background-image`,
     `gatsby-transformer-remark`,
     {
       resolve: `gatsby-source-datocms`,
       options: {
-        apiToken: process.env.DATO_API_TOKEN
-      }
-    }
-  ]
+        apiToken: process.env.DATO_API_TOKEN,
+      },
+    },
+  ],
 };

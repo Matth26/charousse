@@ -1,55 +1,24 @@
 import React, { useState } from 'react';
-import { MdPhone, MdEmail, MdWeb } from "react-icons/md";
+import { MdPhone, MdEmail, MdWeb } from 'react-icons/md';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
-import Collapsible from 'react-collapsible';
-import { IconContext } from "react-icons";
+import { IconContext } from 'react-icons';
 
 import BackgroundImage from 'gatsby-background-image';
 
-var months = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December'
-];
-
-var enToFrMonths = {
-  'January': 'Janvier',
-  'February': 'Février',
-  'March': 'Mars',
-  'April': 'Avril',
-  'May': 'Mai',
-  'June': 'Juin',
-  'July': 'Juillet',
-  'August': 'Août',
-  'September': 'Septembre',
-  'October': 'Octobre',
-  'November': 'Novembre',
-  'December': 'Décembre'
-};
-
 var frToEnMonths = {
-  'Janvier': 'January',
-  'Février': 'February',
-  'Mars': 'March',
-  'Avril': 'April',
-  'Mai': 'May',
-  'Juin': 'June',
-  'Juillet': 'July',
-  'Août': 'August',
-  'Septembre': 'September',
-  'Octobre': 'October',
-  'Novembre': 'November',
-  'Décembre': 'December'
+  Janvier: 'January',
+  Février: 'February',
+  Mars: 'March',
+  Avril: 'April',
+  Mai: 'May',
+  Juin: 'June',
+  Juillet: 'July',
+  Août: 'August',
+  Septembre: 'September',
+  Octobre: 'October',
+  Novembre: 'November',
+  Décembre: 'December',
 };
 
 var mois = [
@@ -64,10 +33,8 @@ var mois = [
   'Septembre',
   'Octobre',
   'Novembre',
-  'Décembre'
+  'Décembre',
 ];
-
-var years = ['2019', '2020', '2021', '2022'];
 
 function replaceDate(date) {
   return (
@@ -112,6 +79,15 @@ function displayDate(date) {
 function displayStageDate(debut, fin) {
   var d = replaceDate(debut).split(' ');
   var f = replaceDate(fin).split(' ');
+
+  if (debut === fin) {
+    return (
+      <span className="stage_date">
+        {<span className="stage_week_day">{d[0]}</span>} {d[1]} {d[2]}
+      </span>
+    );
+  }
+
   return (
     <span className="stage_date">
       Du {<span className="stage_week_day">{d[0]}</span>} {d[1]} {d[2]} au{' '}
@@ -124,44 +100,61 @@ function displayStage(stage) {
   let infos = stage.orga[0];
   console.log(stage);
   return (
-  <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
-    <div key={stage.id}>
-      <figure className="card">
-        <figcaption className="card__caption">
-          <h6 className="card__title">{displayStageDate(stage.debut, stage.fin)}</h6>
-          <div className="card__description">
-            <h2 className="stage__intitule">{stage.intitule}</h2>
-            <p className="stage__description">{stage.description}</p>
-            <div className="stage__contact">
-              <p>Proposé par <b>{infos.nom}</b></p>
-              <div className="stage__contact_infos">
-                {(infos.tel != "") > 0 && (<p><MdPhone/> {infos.tel}</p>)}
-                {(infos.email != "") > 0 && (<p><MdEmail/> {infos.email}</p>)}
-                {(infos.site != "") > 0 && (<p><MdWeb/> {infos.site}</p>)}
+    <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
+      <div key={stage.id}>
+        <figure className="card">
+          <figcaption className="card__caption">
+            <h6 className="card__title">
+              {displayStageDate(stage.debut, stage.fin)}
+            </h6>
+            <div className="card__description">
+              <h2 className="stage__intitule">{stage.intitule}</h2>
+              <p className="stage__description">{stage.description}</p>
+              <div className="stage__contact">
+                <p>
+                  Proposé par <b>{infos.nom}</b>
+                </p>
+                <div className="stage__contact_infos">
+                  {(infos.tel !== '') > 0 && (
+                    <p>
+                      <MdPhone /> {infos.tel}
+                    </p>
+                  )}
+                  {(infos.email !== '') > 0 && (
+                    <p>
+                      <MdEmail /> {infos.email}
+                    </p>
+                  )}
+                  {(infos.site !== '') > 0 && (
+                    <p>
+                      <MdWeb /> {infos.site}
+                    </p>
+                  )}
+                </div>
               </div>
             </div>
-          </div>
-        </figcaption>
-      </figure>
-    </div>
-  </IconContext.Provider>
+          </figcaption>
+        </figure>
+      </div>
+    </IconContext.Provider>
   );
 }
 
 function displayMonth(stages, month, year) {
+  console.log('displayMonth');
 
-  console.log("displayMonth");
-
-  const stagesYear = stages.filter(({ node: stage }) => stage.debut.includes(year));
-  const stagesMonth = stagesYear.filter(({ node: stage }) => stage.debut.includes(frToEnMonths[month]));
-  console.log(stagesMonth)
+  const stagesYear = stages.filter(({ node: stage }) =>
+    stage.debut.includes(year)
+  );
+  const stagesMonth = stagesYear.filter(({ node: stage }) =>
+    stage.debut.includes(frToEnMonths[month])
+  );
+  console.log(stagesMonth);
 
   return (
     <div className="month__body">
       {stagesMonth.length > 0 && (
-        <div>
-          {stagesMonth.map(({ node: stage }) => displayStage(stage))}
-        </div>
+        <div>{stagesMonth.map(({ node: stage }) => displayStage(stage))}</div>
       )}
     </div>
   );
@@ -196,7 +189,6 @@ function displayMonth(stages, month, year) {
     </div>*/
 
 function CalendrierPage({ data: { allDatoCmsStage, allDatoCmsBackground } }) {
-  
   var d = new Date();
   let currentMonthIndex = d.getMonth();
   let currentYear = d.getFullYear();
@@ -204,8 +196,8 @@ function CalendrierPage({ data: { allDatoCmsStage, allDatoCmsBackground } }) {
   let monthsCurrentYear = mois.filter((m, i) => i >= currentMonthIndex);
   let monthsNextYear = mois.filter((m, i) => i < currentMonthIndex);
 
-  var temp1 = monthsCurrentYear.map((m) => ({ m: m, y: currentYear }))
-  var temp2 = monthsNextYear.map((m) => ({ m: m, y: currentYear+1 }))
+  var temp1 = monthsCurrentYear.map((m) => ({ m: m, y: currentYear }));
+  var temp2 = monthsNextYear.map((m) => ({ m: m, y: currentYear + 1 }));
   var monthsAndYears = temp1.concat(temp2);
 
   const [month, setMonth] = useState(mois[currentMonthIndex]);
@@ -226,8 +218,16 @@ function CalendrierPage({ data: { allDatoCmsStage, allDatoCmsBackground } }) {
           <h1 className="sheet__title">Calendrier</h1>
           <div className="sheet__inner">
             <div>
-              {monthsAndYears.map(time => (
-                <button className="month__button" onClick={() => { setMonth(time.m); setYear(time.y); }}>{time.m.substring(0, 3) + '.'}</button>
+              {monthsAndYears.map((time) => (
+                <button
+                  className="month__button"
+                  onClick={() => {
+                    setMonth(time.m);
+                    setYear(time.y);
+                  }}
+                >
+                  {time.m.substring(0, 3) + '.'}
+                </button>
               ))}
             </div>
             <h2 className="month__date">
@@ -268,7 +268,10 @@ export const query = graphql`
           id
           title
           source {
-            fluid(maxWidth: 1000, imgixParams: { fm: "jpg", auto: "compress" }) {
+            fluid(
+              maxWidth: 1000
+              imgixParams: { fm: "jpg", auto: "compress" }
+            ) {
               ...GatsbyDatoCmsSizes
             }
           }
