@@ -109,7 +109,10 @@ function displayStage(stage) {
             </h6>
             <div className="card__description">
               <h2 className="stage__intitule">{stage.intitule}</h2>
-              <p className="stage__description">{stage.description}</p>
+              {stage.description.split('\n').map((e) => (
+                <p className="stage__description">{e}</p>
+              ))}
+
               <div className="stage__contact">
                 <p>
                   Proposé par <b>{infos.nom}</b>
@@ -127,7 +130,12 @@ function displayStage(stage) {
                   )}
                   {(infos.site !== '') > 0 && (
                     <p>
-                      <MdWeb /> {infos.site}
+                      <MdWeb />{' '}
+                      {
+                        <a href={infos.site} target="_blank">
+                          {infos.site}
+                        </a>
+                      }
                     </p>
                   )}
                 </div>
