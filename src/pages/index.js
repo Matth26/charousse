@@ -14,8 +14,8 @@ function displayContent(block, i) {
         <Img fluid={block.image.fluid} />
       </div>
     );
-  } else if (block.images) { // SlideShow
-    console.log(block)
+  } else if (block.images) {
+    // SlideShow
     return (
       <div className="sheet__gallery">
         <SlideShow images={block.images} />
@@ -27,7 +27,7 @@ function displayContent(block, i) {
         key={i}
         className="sheet__body"
         dangerouslySetInnerHTML={{
-          __html: block.paragrapheNode.childMarkdownRemark.html
+          __html: block.paragrapheNode.childMarkdownRemark.html,
         }}
       />
     );
@@ -36,7 +36,6 @@ function displayContent(block, i) {
 
 const AccueilPage = ({ data: { page, allDatoCmsBackground } }) => {
   const contentArray = page.edges[0].node.pageContent;
-  console.log(page);
   return (
     <BackgroundImage
       Tag="section"
@@ -47,7 +46,9 @@ const AccueilPage = ({ data: { page, allDatoCmsBackground } }) => {
       <Layout>
         <article className="sheet">
           <h1 className="sheet__title">Accueil</h1>
-          <div className="sheet__inner">{contentArray.map((block, i) => displayContent(block, i))}</div>
+          <div className="sheet__inner">
+            {contentArray.map((block, i) => displayContent(block, i))}
+          </div>
         </article>
       </Layout>
     </BackgroundImage>
@@ -74,7 +75,10 @@ export const query = graphql`
             ... on DatoCmsImage {
               id
               image {
-                fluid(maxWidth: 530, imgixParams: { fm: "jpg", auto: "compress" }) {
+                fluid(
+                  maxWidth: 530
+                  imgixParams: { fm: "jpg", auto: "compress" }
+                ) {
                   ...GatsbyDatoCmsSizes
                 }
               }
@@ -82,7 +86,10 @@ export const query = graphql`
             ... on DatoCmsSlideshow {
               id
               images {
-                fluid(maxWidth: 530, imgixParams: { fm: "jpg", auto: "compress" }) {
+                fluid(
+                  maxWidth: 530
+                  imgixParams: { fm: "jpg", auto: "compress" }
+                ) {
                   ...GatsbyDatoCmsSizes
                 }
               }
@@ -97,7 +104,10 @@ export const query = graphql`
           id
           title
           source {
-            fluid(maxWidth: 1000, imgixParams: { fm: "jpg", auto: "compress" }) {
+            fluid(
+              maxWidth: 1000
+              imgixParams: { fm: "jpg", auto: "compress" }
+            ) {
               ...GatsbyDatoCmsSizes
             }
           }

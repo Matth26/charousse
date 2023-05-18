@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { MdPhone, MdEmail, MdWeb } from 'react-icons/md';
 import { graphql } from 'gatsby';
 import Layout from '../components/layout';
 import { IconContext } from 'react-icons';
+import { navigate } from 'gatsby';
 
 import BackgroundImage from 'gatsby-background-image';
 
@@ -34,6 +35,21 @@ var mois = [
   'Octobre',
   'Novembre',
   'Décembre',
+];
+
+var month_params = [
+  'janvier',
+  'fevrier',
+  'mars',
+  'avril',
+  'mai',
+  'juin',
+  'juillet',
+  'aout',
+  'septembre',
+  'octobre',
+  'novembre',
+  'decembre',
 ];
 
 function replaceDate(date) {
@@ -98,7 +114,6 @@ function displayStageDate(debut, fin) {
 
 function displayStage(stage) {
   let infos = stage.orga[0];
-  console.log(stage);
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <div key={stage.id}>
@@ -109,8 +124,10 @@ function displayStage(stage) {
             </h6>
             <div className="card__description">
               <h2 className="stage__intitule">{stage.intitule}</h2>
-              {stage.description.split('\n').map((e) => (
-                <p className="stage__description">{e}</p>
+              {stage.description.split('\n').map((e, i) => (
+                <p key={i} className="stage__description">
+                  {e}
+                </p>
               ))}
 
               <div className="stage__contact">
@@ -151,15 +168,12 @@ function displayStage(stage) {
 }
 
 function displayMonth(stages, month, year) {
-  console.log('displayMonth');
-
   const stagesYear = stages.filter(({ node: stage }) =>
     stage.debut.includes(year)
   );
   const stagesMonth = stagesYear.filter(({ node: stage }) =>
     stage.debut.includes(frToEnMonths[month])
   );
-  console.log(stagesMonth);
 
   return (
     <div className="month__body">
@@ -214,7 +228,20 @@ function CalendrierPage({ data: { allDatoCmsStage, allDatoCmsBackground } }) {
   const [year, setYear] = useState(currentYear);
 
   let stages = allDatoCmsStage.edges;
-  console.log(stages[0]);
+
+  useEffect(() => {
+    // Parse URL to get month parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const month = urlParams.get('mois');
+
+    if (month) {
+      let index = month_params.findIndex((m) => m === month);
+      if (index !== -1) {
+        setMonth(mois[index]);
+        if (index < currentMonthIndex) setYear(currentYear + 1);
+      }
+    }
+  }, []);
 
   return (
     <BackgroundImage
@@ -234,6 +261,12 @@ function CalendrierPage({ data: { allDatoCmsStage, allDatoCmsBackground } }) {
                   onClick={() => {
                     setMonth(time.m);
                     setYear(time.y);
+                    let index = mois.findIndex((m) => m === time.m);
+                    if (index !== -1) {
+                      navigate(
+                        `${window.location.pathname}?mois=${month_params[index]}`
+                      );
+                    }
                   }}
                 >
                   {time.m.substring(0, 3) + '.'}

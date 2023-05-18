@@ -10,12 +10,11 @@ class Layout extends React.Component {
 
   toggleSidebar = () => {
     this.setState({
-      isOpen: !this.state.isOpen
+      isOpen: !this.state.isOpen,
     });
   };
 
   render() {
-    console.log(this.props);
     return (
       <div className={this.state.isOpen ? 'container is-open' : 'container'}>
         <HelmetDatoCms
@@ -27,7 +26,9 @@ class Layout extends React.Component {
         <div className="container__sidebar">
           <div className="sidebar">
             <h6 className="sidebar__title">
-              <Link to="/">{this.props.data.datoCmsSite.globalSeo.siteName}</Link>
+              <Link to="/">
+                {this.props.data.datoCmsSite.globalSeo.siteName}
+              </Link>
             </h6>
             <ul className="sidebar__menu">
               <li>
@@ -56,17 +57,22 @@ class Layout extends React.Component {
               </li>
             </ul>
             <p className="sidebar__social">
-              {this.props.data.allDatoCmsSocialProfile.edges.map(({ node: profile }) => (
-                <a
-                  key={profile.profileType}
-                  href={profile.url}
-                  target="blank"
-                  className={`social social--${profile.profileType.toLowerCase()}`}>
-                  {' '}
-                </a>
-              ))}
+              {this.props.data.allDatoCmsSocialProfile.edges.map(
+                ({ node: profile }) => (
+                  <a
+                    key={profile.profileType}
+                    href={profile.url}
+                    target="blank"
+                    className={`social social--${profile.profileType.toLowerCase()}`}
+                  >
+                    {' '}
+                  </a>
+                )
+              )}
             </p>
-            <div className="sidebar__copyright">{this.props.data.datoCmsHome.copyright}</div>
+            <div className="sidebar__copyright">
+              {this.props.data.datoCmsHome.copyright}
+            </div>
           </div>
         </div>
         <div className="container__body">
@@ -85,7 +91,7 @@ class Layout extends React.Component {
   }
 }
 
-export default props => (
+export default (props) => (
   <StaticQuery
     query={graphql`
       query Layout2Query {
@@ -118,6 +124,6 @@ export default props => (
         }
       }
     `}
-    render={data => <Layout data={data} {...props} />}
+    render={(data) => <Layout data={data} {...props} />}
   />
 );
