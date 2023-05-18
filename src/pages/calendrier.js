@@ -114,9 +114,11 @@ function displayStage(stage) {
               ))}
 
               <div className="stage__contact">
-                <p>
-                  Proposé par <b>{infos.nom}</b>
-                </p>
+                {infos.nom && (
+                  <p>
+                    Proposé par <b>{infos.nom}</b>
+                  </p>
+                )}
                 <div className="stage__contact_infos">
                   {(infos.tel !== '') > 0 && (
                     <p>
