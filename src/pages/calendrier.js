@@ -1,9 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { MdPhone, MdEmail, MdWeb } from 'react-icons/md';
-import { graphql } from 'gatsby';
-import Layout from '../components/layout';
+import { graphql, navigate } from 'gatsby';
+import React, { useEffect, useState } from 'react';
 import { IconContext } from 'react-icons';
-import { navigate } from 'gatsby';
+import { MdEmail, MdPhone, MdWeb } from 'react-icons/md';
+import Layout from '../components/layout';
 
 import BackgroundImage from 'gatsby-background-image';
 
@@ -171,8 +170,10 @@ function displayMonth(stages, month, year) {
   const stagesYear = stages.filter(({ node: stage }) =>
     stage.debut.includes(year)
   );
-  const stagesMonth = stagesYear.filter(({ node: stage }) =>
-    stage.debut.includes(frToEnMonths[month])
+  const stagesMonth = stagesYear.filter(
+    ({ node: stage }) =>
+      stage.debut.includes(frToEnMonths[month]) ||
+      stage.fin.includes(frToEnMonths[month])
   );
 
   return (
