@@ -84,6 +84,12 @@ function replaceDate(date) {
       .replace('2025', '')
       .replace('2026', '')
       .replace('2027', '')
+      .replace('2028', '')
+      .replace('2029', '')
+      .replace('2030', '')
+      .replace('2031', '')
+      .replace('2032', '')
+      .replace('2033', '')
   );
 }
 
@@ -112,7 +118,15 @@ function displayStageDate(debut, fin) {
 }
 
 function displayStage(stage) {
-  let infos = stage.orga[0];
+  const infos = stage.orga?.[0] ?? {};
+  const name = typeof infos.nom === 'string' ? infos.nom.trim() : '';
+  const tel = typeof infos.tel === 'string' ? infos.tel.trim() : '';
+  const email = typeof infos.email === 'string' ? infos.email.trim() : '';
+  const site = typeof infos.site === 'string' ? infos.site.trim() : '';
+  const descriptionLines =
+    typeof stage.description === 'string' && stage.description.length > 0
+      ? stage.description.split('\n')
+      : [];
   return (
     <IconContext.Provider value={{ style: { verticalAlign: 'middle' } }}>
       <div key={stage.id}>
@@ -123,35 +137,35 @@ function displayStage(stage) {
             </h6>
             <div className="card__description">
               <h2 className="stage__intitule">{stage.intitule}</h2>
-              {stage.description.split('\n').map((e, i) => (
+              {descriptionLines.map((e, i) => (
                 <p key={i} className="stage__description">
                   {e}
                 </p>
               ))}
 
               <div className="stage__contact">
-                {infos.nom && (
+                {name && (
                   <p>
-                    Proposé par <b>{infos.nom}</b>
+                    Proposé par <b>{name}</b>
                   </p>
                 )}
                 <div className="stage__contact_infos">
-                  {(infos.tel !== '') > 0 && (
+                  {tel && (
                     <p>
-                      <MdPhone /> {infos.tel}
+                      <MdPhone /> {tel}
                     </p>
                   )}
-                  {(infos.email !== '') > 0 && (
+                  {email && (
                     <p>
-                      <MdEmail /> {infos.email}
+                      <MdEmail /> {email}
                     </p>
                   )}
-                  {(infos.site !== '') > 0 && (
+                  {site && (
                     <p>
                       <MdWeb />{' '}
                       {
-                        <a href={infos.site} target="_blank">
-                          {infos.site}
+                        <a href={site} target="_blank" rel="noopener noreferrer">
+                          {site}
                         </a>
                       }
                     </p>
@@ -214,6 +228,9 @@ function displayMonth(stages, month, year) {
     </div>*/
 
 function CalendrierPage({ data: { allDatoCmsStage, allDatoCmsBackground } }) {
+  const backgroundNode = allDatoCmsBackground?.edges?.[0]?.node;
+  const stages = allDatoCmsStage?.edges ?? [];
+
   var d = new Date();
   let currentMonthIndex = d.getMonth();
   let currentYear = d.getFullYear();
@@ -228,8 +245,6 @@ function CalendrierPage({ data: { allDatoCmsStage, allDatoCmsBackground } }) {
   const [month, setMonth] = useState(mois[currentMonthIndex]);
   const [year, setYear] = useState(currentYear);
 
-  let stages = allDatoCmsStage.edges;
-
   useEffect(() => {
     // Parse URL to get month parameter
     const urlParams = new URLSearchParams(window.location.search);
@@ -242,13 +257,24 @@ function CalendrierPage({ data: { allDatoCmsStage, allDatoCmsBackground } }) {
         if (index < currentMonthIndex) setYear(currentYear + 1);
       }
     }
-  }, []);
+  }, [currentMonthIndex, currentYear]);
+
+  if (!backgroundNode) {
+    return (
+      <Layout>
+        <article className="sheet">
+          <h1 className="sheet__title">Calendrier</h1>
+          <div className="sheet__inner">Contenu indisponible.</div>
+        </article>
+      </Layout>
+    );
+  }
 
   return (
     <BackgroundImage
       Tag="section"
       className="bckgnd"
-      fluid={allDatoCmsBackground.edges[0].node.source.fluid}
+      fluid={backgroundNode.source.fluid}
       backgroundColor={`#040e18`}
     >
       <Layout>

@@ -4,9 +4,10 @@ import { HelmetDatoCms } from 'gatsby-source-datocms'
 import Img from 'gatsby-image'
 import { graphql } from 'gatsby'
 import Layout from "../components/layout"
+import sanitizeHtml from '../utils/sanitizeHtml'
 
 export default ({ data }) => (
-  <Layout>
+  <Layout useHomeSeo={false}>
     <article className="sheet">
       <HelmetDatoCms seo={data.datoCmsWork.seoMetaTags} />
       <div className="sheet__inner">
@@ -22,7 +23,9 @@ export default ({ data }) => (
         <div
           className="sheet__body"
           dangerouslySetInnerHTML={{
-            __html: data.datoCmsWork.descriptionNode.childMarkdownRemark.html,
+            __html: sanitizeHtml(
+              data.datoCmsWork.descriptionNode.childMarkdownRemark.html
+            ),
           }}
         />
         <div className="sheet__gallery">

@@ -15,19 +15,24 @@ class Layout extends React.Component {
   };
 
   render() {
+    const { data, seo, title, useHomeSeo } = this.props;
+    const seoMetaTags =
+      seo || (useHomeSeo ? data.datoCmsHome.seoMetaTags : null);
+    const pageTitle = title || (useHomeSeo ? 'Charousse' : null);
+
     return (
       <div className={this.state.isOpen ? 'container is-open' : 'container'}>
         <HelmetDatoCms
-          favicon={this.props.data.datoCmsSite.faviconMetaTags}
-          seo={this.props.data.datoCmsHome.seoMetaTags}
+          favicon={data.datoCmsSite.faviconMetaTags}
+          seo={seoMetaTags || undefined}
         >
-          <title>Charousse</title>
+          {pageTitle ? <title>{pageTitle}</title> : null}
         </HelmetDatoCms>
         <div className="container__sidebar">
-          <div className="sidebar">
+          <div className="sidebar" id="site-sidebar">
             <h6 className="sidebar__title">
               <Link to="/">
-                {this.props.data.datoCmsSite.globalSeo.siteName}
+                {data.datoCmsSite.globalSeo.siteName}
               </Link>
             </h6>
             <ul className="sidebar__menu">
@@ -44,10 +49,10 @@ class Layout extends React.Component {
                 <Link to="/tarifs">Tarifs</Link>
               </li>
               <li>
-                <Link to="/vallee">Vallée de Sye et Gervanne</Link>
+                <Link to="/adhesion">Adhésion</Link>
               </li>
               <li>
-                <Link to="/rubrique">Rubrique Saisonnière</Link>
+                <Link to="/vallee">Vallée de Sye et Gervanne</Link>
               </li>
               <li>
                 <Link to="/plan">Plan d'accès</Link>
@@ -57,30 +62,37 @@ class Layout extends React.Component {
               </li>
             </ul>
             <p className="sidebar__social">
-              {this.props.data.allDatoCmsSocialProfile.edges.map(
-                ({ node: profile }) => (
-                  <a
-                    key={profile.profileType}
-                    href={profile.url}
-                    target="blank"
-                    className={`social social--${profile.profileType.toLowerCase()}`}
-                  >
-                    {' '}
-                  </a>
-                )
-              )}
+              {data.allDatoCmsSocialProfile.edges.map(({ node: profile }) => (
+                <a
+                  key={profile.profileType}
+                  href={profile.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label={profile.profileType}
+                  className={`social social--${profile.profileType.toLowerCase()}`}
+                >
+                  <span className="sr-only">{profile.profileType}</span>
+                </a>
+              ))}
             </p>
             <div className="sidebar__copyright">
-              {this.props.data.datoCmsHome.copyright}
+              {data.datoCmsHome.copyright}
             </div>
           </div>
         </div>
         <div className="container__body">
           <div className="container__mobile-header">
             <div className="mobile-header">
-              <div className="mobile-header__menu" onClick={this.toggleSidebar}>
+              <button
+                type="button"
+                className="mobile-header__menu"
+                onClick={this.toggleSidebar}
+                aria-label="Ouvrir le menu"
+                aria-expanded={this.state.isOpen}
+                aria-controls="site-sidebar"
+              >
                 <div></div>
-              </div>
+              </button>
             </div>
           </div>
           <div className="charousse_header">CHAROUSSE</div>
@@ -90,6 +102,12 @@ class Layout extends React.Component {
     );
   }
 }
+
+Layout.defaultProps = {
+  seo: null,
+  title: null,
+  useHomeSeo: true,
+};
 
 export default (props) => (
   <StaticQuery

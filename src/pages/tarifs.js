@@ -5,27 +5,30 @@ import Layout from '../components/layout';
 
 import BackgroundImage from 'gatsby-background-image';
 import SlideShow from '../components/SlideShow';
+import sanitizeHtml from '../utils/sanitizeHtml';
 
 function displayContent(block, i) {
+  const key = block?.id ?? i;
+
   if (block.image !== undefined) {
     return (
-      <div key={i} className="sheet__gallery">
-        <Img key={i} fluid={block.image.fluid} />
+      <div key={key} className="sheet__gallery">
+        <Img fluid={block.image.fluid} />
       </div>
     );
   } else if (block.images !== undefined) {
     return (
-      <div className="sheet__gallery">
+      <div key={key} className="sheet__gallery">
         <SlideShow images={block.images} />
       </div>
     );
   } else {
     return (
       <div
-        key={i}
+        key={key}
         className="sheet__body"
         dangerouslySetInnerHTML={{
-          __html: block.paragrapheNode.childMarkdownRemark.html,
+          __html: sanitizeHtml(block.paragrapheNode.childMarkdownRemark.html),
         }}
       />
     );
@@ -33,12 +36,26 @@ function displayContent(block, i) {
 }
 
 const TarifsPage = ({ data: { tarifsPage, allDatoCmsBackground } }) => {
-  const contentArray = tarifsPage.edges[0].node.pageContent;
+  const pageNode = tarifsPage?.edges?.[0]?.node;
+  const backgroundNode = allDatoCmsBackground?.edges?.[0]?.node;
+
+  if (!pageNode || !backgroundNode) {
+    return (
+      <Layout>
+        <article className="sheet">
+          <h1 className="sheet__title">Tarifs</h1>
+          <div className="sheet__inner">Contenu indisponible.</div>
+        </article>
+      </Layout>
+    );
+  }
+
+  const contentArray = pageNode.pageContent ?? [];
   return (
     <BackgroundImage
       Tag="section"
       className="bckgnd"
-      fluid={allDatoCmsBackground.edges[0].node.source.fluid}
+      fluid={backgroundNode.source.fluid}
       backgroundColor={`#040e18`}
     >
       <Layout>
