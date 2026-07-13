@@ -55,6 +55,9 @@ class Layout extends React.Component {
                 <Link to="/vallee">Vallée de Sye et Gervanne</Link>
               </li>
               <li>
+                <Link to="/rubrique">Rubrique Saisonnière</Link>
+              </li>
+              <li>
                 <Link to="/plan">Plan d'accès</Link>
               </li>
               <li>
